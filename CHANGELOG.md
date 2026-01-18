@@ -15,6 +15,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Support for `uv` tooling as the primary package manager
 - Dependency groups configuration using modern `[dependency-groups]` format
 - `__init__.py` file in `src/` for proper package structure
+- Path normalization to handle various input formats (`./local/`, `../parent/`, `~/backups/`, relative/absolute paths)
+- Support for specifying input as either a directory or a single file (automatically uses parent directory if a file is provided)
 
 ### Changed
 - **BREAKING**: Moved all Python code to `src/` directory following modern Python project structure (src-layout)
@@ -23,6 +25,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Modernized code style (removed unnecessary parentheses around conditionals)
 - Improved README with clearer usage instructions and multiple installation/execution methods
 - Updated build system to use hatchling with proper package configuration
+- Enhanced path handling: input now accepts directories or files (auto-detects parent directory if file is specified)
+- Improved path flexibility: supports relative paths (`./local/`), parent directories (`../parent/`), home directory expansion (`~/backups/`), and absolute paths
 
 ### Fixed
 - Fixed critical bug in `contacts_vcard_extractor.py` where `key` variable was undefined in list comprehension (line 27)
