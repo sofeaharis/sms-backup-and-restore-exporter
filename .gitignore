@@ -201,3 +201,6 @@ call_log.csv
 *.bak
 *.backup
 *.tmp
+
+# Test output directory (contains personal/test data)
+test/
