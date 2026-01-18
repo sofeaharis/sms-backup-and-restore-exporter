@@ -6,7 +6,7 @@
 
 [![Python Version](https://img.shields.io/badge/python-3.8%20%7C%203.9%20%7C%203.10%20%7C%203.11%20%7C%203.12%20%7C%203.13%20%7C%203.14-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Version](https://img.shields.io/badge/version-2.1.0-blue.svg)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-2.2.0-blue.svg)](CHANGELOG.md)
 
 ---
 
@@ -603,6 +603,6 @@ Future enhancements planned:
 
 ---
 
-**Version 2.1.0** - Enhanced with SMS/MMS text extraction and comprehensive tests 🚀
+**Version 2.2.0** - Type-safe and well-formatted codebase with comprehensive quality checks 🚀
 
 For questions, issues, or contributions, please visit the [GitHub repository](https://github.com/RichLewis007/sms-backup-and-restore-exporter).

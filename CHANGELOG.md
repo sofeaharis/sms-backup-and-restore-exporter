@@ -7,6 +7,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.2.0] - 2026-01-18
+
+### Changed
+- **Code formatting** - Applied consistent formatting across all source files using `ruff format`
+- **Type safety improvements** - Fixed all type errors and added proper type annotations
+  - Fixed `Optional[str]` type for `output_dir` parameter in `call_log_generator.py`
+  - Converted `Message ID` fields to strings for consistency in CSV output
+  - Added proper type annotations using `Dict[str, Any]`, `Callable`, and `Union` types
+  - Fixed `callable` type hint to use `typing.Callable` for mypy compatibility
+- **Removed unused imports** - Cleaned up `sys` and `time` imports in `mms_media_extractor.py` (they were actually needed, restored)
+- **Python 3.8 compatibility** - Fixed f-string syntax to avoid nested quote issues for Python 3.8 support
+
+### Added
+- **Type checking** - Integrated `mypy` for static type checking with full type coverage
+- **Type stubs** - Installed `types-requests` and `lxml-stubs` for complete type checking support
+- **Code quality tools** - All source files now pass `ruff check` and `mypy` validation
+
+### Fixed
+- Fixed f-string quote reuse issue in `get_human_readable_duration()` for Python 3.8 compatibility
+- Resolved all type annotation errors reported by mypy
+
 ## [2.1.0] - 2026-01-18
 
 ### Added
