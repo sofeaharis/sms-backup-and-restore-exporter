@@ -6,7 +6,8 @@ import src.call_log_generator
 import src.mms_media_extractor
 import src.contacts_vcard_extractor
 
-if __name__ == "__main__":
+
+def main():
 
     argparse_parser = argparse.ArgumentParser(
         description="Extracts media files, call logs, or vcf/vCard media, from an SMS Backup & Restore backup archive.",
@@ -52,8 +53,12 @@ if __name__ == "__main__":
             argparse_args.no_audio, argparse_args.no_pdfs)
 
     elif (argparse_args.backup_type == "calls"):
-        src.call_log_generator.create_call_log(argparse_args.input_dir)
+        src.call_log_generator.create_call_log(argparse_args.input_dir, argparse_args.output_dir)
 
     elif (argparse_args.backup_type == "vcf"):
         src.contacts_vcard_extractor.parse_contacts_from_vcf_files(
             argparse_args.input_dir, argparse_args.output_dir)
+
+
+if __name__ == "__main__":
+    main()
