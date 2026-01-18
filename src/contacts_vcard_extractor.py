@@ -23,8 +23,9 @@ def parse_vcard_line(file_line: str) -> dict:
     contact = dict()
 
     # This only works because none of the 'simple' key names is a substring of any other key name
-    if any([file_line.startswith(key) for key in vcf_field_parser.SIMPLE_KEYS]):
-        contact[key] = vcf_field_parser.parse_simple_tag(file_line)
+    matching_key = next((key for key in vcf_field_parser.SIMPLE_KEYS if file_line.startswith(key)), None)
+    if matching_key:
+        contact[matching_key] = vcf_field_parser.parse_simple_tag(file_line)
 
     # With the simple keys out of the way, parse the remaining keys
     else:
