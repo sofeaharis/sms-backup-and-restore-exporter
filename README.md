@@ -123,14 +123,14 @@ pip install -e .
    - Call logs: `calls-*.xml` files
    - Contacts: `*.vcf` files
 
-2. **Extract MMS media**:
+2. **Extract MMS media from SMS backup XML files**:
    ```bash
-   uv run xml-backup-exporter -t sms -i ~/backups -o ~/extracted_media
+   uv run xml-backup-exporter -t sms-mms-media -i ~/backups -o ~/extracted_media
    ```
 
 3. **Extract SMS/MMS text messages**:
    ```bash
-   uv run xml-backup-exporter -t sms-text -i ~/backups -o ~/messages
+   uv run xml-backup-exporter -t sms-mms-text -i ~/backups -o ~/messages
    ```
 
 4. **Generate call log**:
@@ -158,7 +158,7 @@ uv run xml-backup-exporter [-h] -t BACKUP_TYPE -i INPUT_DIR -o OUTPUT_DIR [OPTIO
 | Option | Description |
 |--------|-------------|
 | `-h, --help` | Show help message and exit |
-| `-t, --backup-type` | Type of extraction: `sms`, `sms-text`, `calls`, or `vcf` |
+| `-t, --backup-type` | Type of extraction: `sms-mms-media`, `sms-mms-text`, `calls`, or `vcf` |
 | `-i, --input-dir` | Directory containing XML or VCF files (can also be a single file) |
 | `-o, --output-dir` | Directory where extracted files will be saved |
 | `--no-images` | Don't extract image files (SMS only) |
@@ -202,25 +202,25 @@ The output directory will be **automatically created** if it doesn't exist. You 
 
 ### Extract All MMS Media
 
-Extract all images, videos, audio, and PDFs from SMS backups:
+Extract all MMS media attachments (images, videos, audio, and PDFs) from SMS backup XML files:
 
 ```bash
-uv run xml-backup-exporter -t sms -i ~/backups -o ~/extracted_media
+uv run xml-backup-exporter -t sms-mms-media -i ~/backups -o ~/extracted_media
 ```
 
 ### Extract Only Videos
 
-Extract only video files, excluding images, audio, and PDFs:
+Extract only video files from MMS messages, excluding images, audio, and PDFs:
 
 ```bash
-uv run xml-backup-exporter -t sms -i ~/backups -o ~/videos \
+uv run xml-backup-exporter -t sms-mms-media -i ~/backups -o ~/videos \
   --no-images --no-audio --no-pdfs
 ```
 
 ### Extract Images and PDFs Only
 
 ```bash
-uv run xml-backup-exporter -t sms -i ~/backups -o ~/media \
+uv run xml-backup-exporter -t sms-mms-media -i ~/backups -o ~/media \
   --no-videos --no-audio
 ```
 
@@ -239,7 +239,7 @@ The output will be a file named `call_log.csv` in the output directory.
 Extract all SMS text messages and MMS text bodies to a CSV file:
 
 ```bash
-uv run xml-backup-exporter -t sms-text -i ~/backups -o ~/messages
+uv run xml-backup-exporter -t sms-mms-text -i ~/backups -o ~/messages
 ```
 
 The output will be a file named `sms_messages.csv` in the output directory.
@@ -257,7 +257,7 @@ uv run xml-backup-exporter -t vcf -i ~/backups -o ~/contact_media
 The tool automatically detects if you provide a file instead of a directory:
 
 ```bash
-uv run xml-backup-exporter -t sms -i ~/backups/sms-20231219.xml -o ~/output
+uv run xml-backup-exporter -t sms-mms-media -i ~/backups/sms-20231219.xml -o ~/output
 # Note: Will use ~/backups/ as the input directory
 ```
 
@@ -267,17 +267,17 @@ If you installed with `pip install -e .`:
 
 ```bash
 # Direct command (no 'uv run' needed)
-xml-backup-exporter -t sms -i ~/backups -o ~/output
+xml-backup-exporter -t sms-mms-media -i ~/backups -o ~/output
 ```
 
 Or run as a Python module:
 
 ```bash
 # Using Python directly
-python -m src.xml_backup_exporter -t sms -i ~/backups -o ~/output
+python -m src.xml_backup_exporter -t sms-mms-media -i ~/backups -o ~/output
 
 # Using uv with Python module
-uv run python -m src.xml_backup_exporter -t sms -i ~/backups -o ~/output
+uv run python -m src.xml_backup_exporter -t sms-mms-media -i ~/backups -o ~/output
 ```
 
 </details>
@@ -290,6 +290,8 @@ uv run python -m src.xml_backup_exporter -t sms -i ~/backups -o ~/output
 <summary><b>Click to expand output format details</b></summary>
 
 ### SMS/MMS Media Files
+
+**Note:** The `sms-mms-media` export type extracts media attachments from MMS messages contained in SMS backup XML files. Regular SMS messages don't contain media attachments, so only MMS message media is extracted.
 
 - **Filename preservation**: If the original MMS message included a filename, it will be used
 - **Auto-naming**: If no filename exists, a random 10-character filename will be generated
@@ -386,7 +388,7 @@ Call Date (timestamp),Call date,Call type,Caller name,Caller #,Call duration (s)
 ls ~/backups
 
 # Use the correct path
-uv run xml-backup-exporter -t sms -i ~/backups -o ~/output
+uv run xml-backup-exporter -t sms-mms-media -i ~/backups -o ~/output
 ```
 
 #### "No calls found to write to call log"
@@ -405,11 +407,11 @@ uv run xml-backup-exporter -t sms -i ~/backups -o ~/output
 **Solution:** Try using absolute paths or ensure relative paths are correct:
 ```bash
 # Use absolute path
-uv run xml-backup-exporter -t sms -i /full/path/to/backups -o /full/path/to/output
+uv run xml-backup-exporter -t sms-mms-media -i /full/path/to/backups -o /full/path/to/output
 
 # Or navigate to the directory first
 cd ~/backups
-uv run xml-backup-exporter -t sms -i . -o ../output
+uv run xml-backup-exporter -t sms-mms-media -i . -o ../output
 ```
 
 #### Python version issues

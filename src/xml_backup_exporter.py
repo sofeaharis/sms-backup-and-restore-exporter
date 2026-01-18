@@ -66,8 +66,8 @@ def main() -> None:
     function based on the backup type specified by the user.
 
     Supported backup types:
-    - 'sms': Export MMS media attachments from SMS backup XML files
-    - 'sms-text': Export SMS text messages and MMS text bodies to CSV
+    - 'sms-mms-media': Export MMS media attachments (images, videos, audio, PDFs) from SMS backup XML files
+    - 'sms-mms-text': Export SMS text messages and MMS text bodies to CSV
     - 'calls': Generate a deduplicated call log CSV from call backup XML files
     - 'vcf': Export multimedia content from vCard/VCF contact files
 
@@ -78,11 +78,11 @@ def main() -> None:
         description="Exports media files, call logs, or vcf/vCard media from SMS Backup & Restore backup archives.",
         formatter_class=RawTextHelpFormatter,
         epilog="""Examples:
-  To export all MMS media attachments:
-     xml-backup-exporter -t sms -i input_dir -o output_dir
+  To export all MMS media attachments from SMS backup XML files:
+     xml-backup-exporter -t sms-mms-media -i input_dir -o output_dir
 
   To export only Video files:
-     xml-backup-exporter -t sms -i input_dir -o output_dir --no-images --no-audio --no-pdfs
+     xml-backup-exporter -t sms-mms-media -i input_dir -o output_dir --no-images --no-audio --no-pdfs
 
   To export a de-duplicated call log:
      xml-backup-exporter -t calls -i input_dir -o output_dir
@@ -91,7 +91,7 @@ def main() -> None:
      xml-backup-exporter -t vcf -i input_dir -o output_dir
 
   To export SMS text messages and MMS text bodies:
-     xml-backup-exporter -t sms-text -i input_dir -o output_dir
+     xml-backup-exporter -t sms-mms-text -i input_dir -o output_dir
  
 """,
     )
@@ -108,8 +108,8 @@ def main() -> None:
         "--backup-type",
         type=str,
         required=True,
-        choices=["sms", "sms-text", "calls", "vcf"],
-        help="The type of export: 'sms' for message media files, 'sms-text' for SMS/MMS text messages, 'calls' to create a call log, or 'vcf' to export media from a VCF/vCard file",
+        choices=["sms-mms-media", "sms-mms-text", "calls", "vcf"],
+        help="The type of export: 'sms-mms-media' for MMS media files from SMS backup XML, 'sms-mms-text' for SMS/MMS text messages, 'calls' to create a call log, or 'vcf' to export media from a VCF/vCard file",
     )
     parser.add_argument(
         "-o",
@@ -163,7 +163,7 @@ def main() -> None:
         input_dir = input_path
 
     # Route to appropriate export function based on backup type
-    if args.backup_type == "sms":
+    if args.backup_type == "sms-mms-media":
         mms_media_extractor.reconstruct_mms_media(
             input_dir,
             output_dir,
@@ -172,7 +172,7 @@ def main() -> None:
             args.process_audio,
             args.process_pdfs,
         )
-    elif args.backup_type == "sms-text":
+    elif args.backup_type == "sms-mms-text":
         sms_text_extractor.extract_sms_messages(input_dir, output_dir)
     elif args.backup_type == "calls":
         call_log_generator.create_call_log(input_dir, output_dir)

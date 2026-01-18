@@ -58,7 +58,7 @@ class TestNormalizePath:
     @patch('src.xml_backup_exporter.mms_media_extractor')
     @patch('src.xml_backup_exporter.call_log_generator')
     @patch('src.xml_backup_exporter.contacts_vcard_extractor')
-    @patch('sys.argv', ['xml-backup-exporter', '-t', 'sms', '-i', '/test/input', '-o', '/test/output'])
+    @patch('sys.argv', ['xml-backup-exporter', '-t', 'sms-mms-media', '-i', '/test/input', '-o', '/test/output'])
     def test_main_sms_extraction(self, mock_vcf, mock_calls, mock_sms):
         """Test main function with sms backup type."""
         from src.xml_backup_exporter import main
@@ -89,9 +89,9 @@ class TestNormalizePath:
     @patch('src.xml_backup_exporter.sms_text_extractor')
     @patch('src.xml_backup_exporter.call_log_generator')
     @patch('src.xml_backup_exporter.contacts_vcard_extractor')
-    @patch('sys.argv', ['xml-backup-exporter', '-t', 'sms-text', '-i', '/test/input', '-o', '/test/output'])
+    @patch('sys.argv', ['xml-backup-exporter', '-t', 'sms-mms-text', '-i', '/test/input', '-o', '/test/output'])
     def test_main_sms_text_extraction(self, mock_vcf, mock_calls, mock_sms_text, mock_sms):
-        """Test main function with sms-text backup type."""
+        """Test main function with sms-mms-text backup type."""
         from src.xml_backup_exporter import main
         
         with patch('src.xml_backup_exporter.normalize_path', side_effect=lambda x: x):

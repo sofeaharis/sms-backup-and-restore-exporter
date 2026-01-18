@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- **BREAKING**: Renamed backup type from `sms` to `sms-mms-media` for clarity
+  - The `-t sms` option is now `-t sms-mms-media`
+  - This better reflects that it extracts MMS media attachments from SMS backup XML files
+  - Regular SMS messages don't contain media attachments, only MMS messages do
+- **BREAKING**: Renamed backup type from `sms-text` to `sms-mms-text` for consistency
+  - The `-t sms-text` option is now `-t sms-mms-text`
+  - This better reflects that it extracts both SMS text messages and MMS text bodies
+- Updated documentation to clarify that `sms-mms-media` extracts MMS media from SMS backup XML files
+- Updated documentation to clarify that `sms-mms-text` extracts both SMS and MMS text content
+
 ## [2.2.0] - 2026-01-18
 
 ### Changed
