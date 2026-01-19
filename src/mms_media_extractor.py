@@ -376,13 +376,53 @@ def reconstruct_mms_media(
 
     # Remove duplicates and empty files after extraction
     num_dup_files = remove_duplicate_files(output_media_dir)
+    
+    # Calculate statistics on remaining files (after duplicates removed)
+    file_types = {}
+    total_size = 0
+    num_final_files = 0
+    
+    if os.path.exists(output_media_dir):
+        for filename in os.listdir(output_media_dir):
+            file_path = os.path.join(output_media_dir, filename)
+            if os.path.isfile(file_path):
+                num_final_files += 1
+                file_size = os.path.getsize(file_path)
+                total_size += file_size
+                
+                # Get file extension
+                _, ext = os.path.splitext(filename)
+                ext = ext.lower() if ext else "no extension"
+                file_types[ext] = file_types.get(ext, 0) + 1
+    
     end_time = time.time()
-
-    print(
-        f"\n{orig_files_count} media files found in messages, "
-        f"{num_dup_files} duplicates (or empty files) removed. "
-        f"Time elapsed: {round(end_time - start_time, 2)} seconds"
-    )
+    
+    # Build file type summary
+    if file_types:
+        file_type_summary = ", ".join(
+            f"{count} {ext[1:] if ext.startswith('.') else ext}"
+            for ext, count in sorted(file_types.items(), key=lambda x: x[1], reverse=True)
+        )
+    else:
+        file_type_summary = "none"
+    
+    # Format total size in human-readable format
+    size_units = ["B", "KB", "MB", "GB", "TB"]
+    size_value = total_size
+    size_unit_index = 0
+    while size_value >= 1024 and size_unit_index < len(size_units) - 1:
+        size_value /= 1024.0
+        size_unit_index += 1
+    size_str = f"{size_value:.2f} {size_units[size_unit_index]}"
+    
+    print(f"\nExtraction complete:")
+    if num_final_files > 0:
+        print(f"  - {num_final_files} file(s) written ({file_type_summary})")
+        print(f"  - Total size: {size_str}")
+    else:
+        print(f"  - No files written (all were duplicates or empty)")
+    print(f"  - {num_dup_files} duplicate(s) or empty file(s) removed")
+    print(f"  - Time elapsed: {round(end_time - start_time, 2)} seconds")
 
 
 def remove_duplicate_files(output_media_dir: str) -> int:

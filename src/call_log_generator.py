@@ -256,6 +256,7 @@ def create_call_log(calls_xml_dir: str, output_dir: Optional[str] = None) -> Non
         return
 
     # Write CSV with proper newline handling for cross-platform compatibility
+    num_records_written = 0
     with open(output_file, "w", newline="") as csv_file_handle:
         csv_writer = csv.writer(csv_file_handle)
 
@@ -267,5 +268,7 @@ def create_call_log(calls_xml_dir: str, output_dir: Optional[str] = None) -> Non
             all_calls_list, key=lambda k: k[call_timestamp_key_name]
         ):
             csv_writer.writerow(list(call_entry.values()))
+            num_records_written += 1
 
     print(f"Call log written to {output_file}")
+    print(f"  - {num_records_written} call record(s) exported")
