@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{background-color: rgb(246, 255, 182);}
+        h1{color: blue;}
+    </style>
+</head>
+<body>
+    <h1>WELCOME TO KPM BERANANG</h1>
+    <strong>NEW STUDENT</strong><br><br>
+    <form action="new_student" method="post">
+        {% csrf_token %}
+        ID : <input type="text",  name="s_id"><br><br>
+        Name : <input type="text", name="s_name"><br><br>
+        Address : <input type="text", name="s_add"><br><br>
+        Phone : <input type="text", name="s_phone"><br><br>
+        Course code :
+        <select name="s_course" >
+            {% for value in allcourse %}
+                <option value="{{value.code}}">{{value.code}}</option>
+            {% endfor %}
+        </select>
+        <br><br>
+        <input type="submit" value="SAVE">
+
+    </form>
+
+    <br><br><br>
+    {{message}}
+
+<br><br>
+<a href="{% url 'index' %}">HOME</a>
+</body>
+</html>

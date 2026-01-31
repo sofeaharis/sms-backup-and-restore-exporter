@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        h1{color: blue;}
+        body{background-color: rgb(127, 204, 255);}
+    </style>
+</head>
+<body>
+    <h1>WELCOME TO KPM BERANANG</h1>
+    <ul>
+        <li>COURSE</a> </li>
+        <ul>
+            <li><a href="{% url 'course' %}">Course</a> </li>
+            <li><a href="{% url 'search_course' %}">Search Course</a> </li>
+        </ul>
+        <br><br>
+        <li>STUDENT</li>
+        <ul>
+            <li><a href="new_student">New Student</a></li>
+            <li>Search by</li>
+            <ol>
+                <li> Student</li>
+                <li><a href="search_by_course">Course</a>  </li>
+
+            </ol>
+        </ul>
+    </ul>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        h1{color: blue;}
+        body{background-color: rgb(236, 156, 210);}
+        table,tr,td {border: 1pt solid;}
+    </style>
+</head>
+<body>
+    <h1>WELCOME TO KPM BERANANG</h1>
+    <strong>COURSE</strong><br><br>
+
+    <table>
+        <tr>
+            <td><strong>CODE</strong></td>
+            <td><strong>DESCRIPTION</strong></td>
+            <td><strong>UPDATE?</strong></td>
+            <td><strong>DELETE?</strong></td>
+        </tr>
+        {% for data in allcourse %}
+            <tr>
+                <td>{{data.code}}</td>
+                <td>{{data.desc}}</td>
+                <td><a href="update_course/{{data.code}}">update</a></td>
+                <td><a href="delete_course/{{data.code}}">delete</a></td>
+            </tr>
+        {% endfor %}
+    </table>
+    <br><br>
+    <a href="{% url 'new_course' %}">New Course</a> <br><br>
+    <a href="{% url 'index' %}">HOME</a> 
+</body>
+</html>
+
